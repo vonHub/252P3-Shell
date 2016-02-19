@@ -12,7 +12,7 @@
 #include <string.h>
 #include "y.tab.h"
 
-static  void yyunput (int c,char *buf_ptr  );
+static void yyunput (int c, char *buf_ptr);
 
 void myunputc(int c) {
     unput(c);
