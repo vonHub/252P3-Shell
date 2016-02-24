@@ -15,6 +15,7 @@
 %token	<string_val> WORD
 
 %token 	NOTOKEN GREAT NEWLINE GREATGREAT PIPE AMPERSAND
+%token  LESS GREATAND GREATGREATAND
 
 %union	{
 		char   *string_val;
