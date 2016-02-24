@@ -63,4 +63,3 @@ void myunputc(int c) {
 		yylval.string_val = strdup(yytext);
 		return WORD;
 	}
-
