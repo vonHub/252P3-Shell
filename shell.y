@@ -9,11 +9,12 @@
  *
  * you must extend it to understand the complete shell grammar
  *
+ * cmd [arg]* [ | cmd [arg]* ]* [ [> filename] [< filename] [ >& filename] [>> filename] [>>& filename] ]* [&]
  */
 
 %token	<string_val> WORD
 
-%token 	NOTOKEN GREAT NEWLINE
+%token 	NOTOKEN GREAT NEWLINE GREATGREAT PIPE AMPERSAND
 
 %union	{
 		char   *string_val;
