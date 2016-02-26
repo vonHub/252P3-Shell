@@ -38,7 +38,7 @@ goal:
 
 commands: 
 	command
-	| commands PIPE command 
+	| commands command 
 	;
 
 command: simple_command
