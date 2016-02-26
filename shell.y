@@ -39,6 +39,12 @@ goal:
 commands: 
 	command
 	| commands command 
+    | command AMPERSAND {
+        printf("   Yacc: background\n");
+    }
+    | commands command AMPERSAND {
+        printf("   Yacc: background\n");
+    }
 	;
 
 command:
