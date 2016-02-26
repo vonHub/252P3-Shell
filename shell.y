@@ -93,7 +93,7 @@ iomodifier_opt:
 	}
     | LESS WORD {
         printf("   Yacc: direct input \"%s\"\n", $2);
-        Command::_currentCommand._outFile = $2;
+        Command::_currentCommand._inFile = $2;
     }
     /*| GREATGREAT WORD {
         printf("   Yacc: append output \"%s\"\n", $2);
