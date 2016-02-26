@@ -38,7 +38,7 @@ goal:
 
 commands: 
 	command
-	| commands command 
+	| commands PIPE command 
 	;
 
 command: simple_command
@@ -93,11 +93,6 @@ iomodifier_opt:
     }
 	| /* can be empty */ 
 	;
-
-background_optional:
-    AMPERSAND
-    | /* can be empty */
-    ;
 
 %%
 
