@@ -96,7 +96,7 @@ iomodifier_opt:
         Command::_currentCommand._outFile = $2;
     } LESS WORD {
         printf("   Yacc: direct input \"%s\"\n", $2);
-        Command::currenctCommand._inFile = $2;
+        Command::currentCommand._inFile = $2;
     }
 	| /* can be empty */ 
 	;
