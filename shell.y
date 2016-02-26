@@ -41,8 +41,12 @@ commands:
 	| commands command 
 	;
 
-command: simple_command
-        ;
+command:
+    simple_command
+    | PIPE simple_command {
+        printf("Pipe incorporated\n");
+    }
+    ;
 
 simple_command:	
 	command_and_args iomodifier_opt NEWLINE {
