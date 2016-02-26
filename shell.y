@@ -39,12 +39,6 @@ goal:
 commands: 
 	command
 	| commands command 
-    | command AMPERSAND {
-        printf("   Yacc: background\n");
-    }
-    | commands command AMPERSAND {
-        printf("   Yacc: background\n");
-    }
 	;
 
 command:
@@ -81,6 +75,9 @@ argument:
 
 	       Command::_currentSimpleCommand->insertArgument( $1 );\
 	}
+    | AMPERSAND {
+        printf("   Yacc: background\n");
+    }
 	;
 
 command_word:
