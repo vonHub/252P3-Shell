@@ -77,7 +77,7 @@ argument:
 	}
     | AMPERSAND {
         printf("   Yacc: background\n");
-        Command::_background = 1;
+        Command::_currentCommand._background = 1;
     }
 	;
 
