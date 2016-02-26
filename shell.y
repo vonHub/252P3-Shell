@@ -43,9 +43,6 @@ commands:
 
 command:
     simple_command
-    | PIPE simple_command {
-        printf("Pipe incorporated\n");
-    }
     ;
 
 simple_command:	
@@ -53,6 +50,9 @@ simple_command:
 		printf("   Yacc: Execute command\n");
 		Command::_currentCommand.execute();
 	}
+    | command_and_args iomodifier_opt PIPE {
+        printf("Finally\n");
+    }
 	| NEWLINE 
 	| error NEWLINE { yyerrok; }
 	;
