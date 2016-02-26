@@ -50,9 +50,6 @@ simple_command:
 		printf("   Yacc: Execute command\n");
 		Command::_currentCommand.execute();
 	}
-    | command_and_args iomodifier_opt PIPE {
-        printf("Finally\n");
-    }
 	| NEWLINE 
 	| error NEWLINE { yyerrok; }
 	;
@@ -94,6 +91,9 @@ iomodifier_opt:
     | GREATGREAT WORD {
         printf("   Yacc: append output \"%s\"\n", $2);
         Command::_currentCommand._outFile = $2;
+    }
+    | PIPE {
+        printf("Worked\n");
     }
 	| /* can be empty */ 
 	;
