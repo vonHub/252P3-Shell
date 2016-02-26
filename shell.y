@@ -50,6 +50,9 @@ simple_command:
 		printf("   Yacc: Execute command\n");
 		Command::_currentCommand.execute();
 	}
+    | command_and_args PIPE {
+        printf("   Yacc: Pipe\n");
+    }
 	| NEWLINE 
 	| error NEWLINE { yyerrok; }
 	;
