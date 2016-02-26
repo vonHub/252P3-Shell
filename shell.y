@@ -38,7 +38,7 @@ goal:
 
 commands: 
 	command
-	| commands command 
+	| commands PIPE command 
 	;
 
 command:
@@ -91,9 +91,6 @@ iomodifier_opt:
     | GREATGREAT WORD {
         printf("   Yacc: append output \"%s\"\n", $2);
         Command::_currentCommand._outFile = $2;
-    }
-    | PIPE {
-        printf("Worked\n");
     }
 	| /* can be empty */ 
 	;
