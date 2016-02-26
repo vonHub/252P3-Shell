@@ -42,7 +42,7 @@ commands:
 	;
 
 command:
-    simple_command
+    simple_command background
     ;
 
 simple_command:	
@@ -75,10 +75,6 @@ argument:
 
 	       Command::_currentSimpleCommand->insertArgument( $1 );\
 	}
-    | AMPERSAND {
-        printf("   Yacc: background\n");
-        Command::_currentCommand._background = 1;
-    }
 	;
 
 command_word:
@@ -105,6 +101,13 @@ iomodifier_opt:
     }
 	| /* can be empty */ 
 	;
+
+background:
+    AMPERSAND {
+        printf("   Yacc: background\n");
+    }
+    | /* can be empty */
+    ;
     
 
 %%
