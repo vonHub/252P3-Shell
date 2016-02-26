@@ -87,19 +87,21 @@ command_word:
 	;
 
 iomodifier_opt:
-	GREAT WORD {
+	LESS WORD {
 		printf("   Yacc: insert output \"%s\"\n", $2);
 		Command::_currentCommand._outFile = $2;
 	}
-    | GREATGREAT WORD {
+    /*| GREATGREAT WORD {
         printf("   Yacc: append output \"%s\"\n", $2);
         Command::_currentCommand._outFile = $2;
-    } LESS WORD {
+    }
+    | LESS WORD {
         printf("   Yacc: direct input \"%s\"\n", $2);
         Command::_currentCommand._inFile = $2;
-    }
+    }*/
 	| /* can be empty */ 
 	;
+    
 
 %%
 
