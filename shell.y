@@ -105,6 +105,7 @@ iomodifier_opt:
 background:
     AMPERSAND {
         printf("   Yacc: background\n");
+        Command::_currentCommand._background = 1;
     }
     | /* can be empty */
     ;
