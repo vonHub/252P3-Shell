@@ -111,7 +111,7 @@ iomodifier:
     }
     | GREATGREATAND WORD {
         printf("   Yacc: append error \"%s\"\n", $2);
-        Command::_currentCOmmand._errFile = $2;
+        Command::_currentCommand._errFile = $2;
     }
 	;
 
