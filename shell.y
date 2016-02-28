@@ -89,6 +89,8 @@ command_word:
 iomodifier_list:
     iomodifier
     | iomodifier_list iomodifier
+    |
+    ;
 
 iomodifier:
 	GREAT WORD {
