@@ -109,6 +109,8 @@ input:
         printf("   Yacc: direct input \"%s\"\n", $2);
         Command::_currentCommand._inFile = $2;
     }
+    | /* can be empty */
+    ;
     
 
 background:
