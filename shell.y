@@ -105,6 +105,14 @@ iomodifier:
         printf("   Yacc: direct input \"%s\"\n", $2);
         Command::_currentCommand._inFile = $2;
     }
+    | GREATAND WORD {
+        printf("   Yacc: direct error \"%s\"\n", $2);
+        Command::_currentCommand._errFile = $2;
+    }
+    | GREATGREATAND WORD {
+        printf("   Yacc: append error \"%s\"\n", $2);
+        Command::_currentCOmmand._errFile = $2;
+    }
 	;
 
 background:
