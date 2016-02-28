@@ -105,7 +105,6 @@ iomodifier:
         printf("   Yacc: direct input \"%s\"\n", $2);
         Command::_currentCommand._outFile = $2;
     }
-	| /* can be empty */ 
 	;
 
 background:
