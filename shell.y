@@ -95,23 +95,48 @@ iomodifier_list:
 iomodifier:
 	GREAT WORD {
 		printf("   Yacc: direct output \"%s\"\n", $2);
-		Command::_currentCommand._outFile = $2;
+        if (Command::_currentCommand._outFile == 0) {
+		    Command::_currentCommand._outFile = $2;
+        } else {
+            printf("Ambiguous output redirection\n");
+            Command::_currentCommand._error = 1;
+        }
 	}
     | GREATGREAT WORD {
         printf("   Yacc: append output \"%s\"\n", $2);
-        Command::_currentCommand._outFile = $2;
+        if (Command::_currentCommand._outFile == 0) {
+            Command::_currentCommand._outFile = $2;
+        } else {
+            printf("Ambiguous output redirection\n");
+            Command::_currentCommand._error = 1;
+        }
     }
     | LESS WORD {
         printf("   Yacc: direct input \"%s\"\n", $2);
-        Command::_currentCommand._inFile = $2;
+        if (Command::_currentCommand._inFile == 0) {
+            Command::_currentCommand._inFile = $2;
+        } else {
+            printf("Ambiguous input redirection\n");
+            Command::_currentCommand._error = 1;
+        }
     }
     | GREATAND WORD {
         printf("   Yacc: direct error \"%s\"\n", $2);
-        Command::_currentCommand._errFile = $2;
+        if (Command::_currentCommand._errFile == 0) {
+            Command::_currentCommand._errFile = $2;
+        } else {
+            printf("Ambiguous error redirection\n");
+            Command::_currentCommand._error = 1;
+        }
     }
     | GREATGREATAND WORD {
         printf("   Yacc: append error \"%s\"\n", $2);
-        Command::_currentCommand._errFile = $2;
+        if (Command::_currentCommand._errFile == 0) {
+            Command::_currentCommand._errFile = $2;
+        } else {
+            printf("Ambiguous error redirection\n");
+            Command::_currentCommand._error = 1;
+        }
     }
 	;
 
