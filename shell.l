@@ -23,47 +23,38 @@ void myunputc(int c) {
 %%
 
 \n 	{
-        //printf("Newline\n");
 		return NEWLINE;
 	}
 
 [ \t] 	{
 		/* Discard spaces and tabs */
-        //printf("Space or tab\n");
     }	
 
 ">" 	{
-        //printf("Great\n");
 		return GREAT;
 	}
 
 ">>"    {
-        //printf("GreatGreat\n");
         return GREATGREAT;
     }
 
 "|" {
-        //printf("Pipe\n");
         return PIPE;
     }
 
 "&" {
-        //printf("Ampersand\n");
         return AMPERSAND;
     }
 
 "<" {
-        //printf("Less\n");
         return LESS;
     }
 
 ">&"    {
-        //printf("GreatAnd\n");
         return GREATAND;
     }
 
 ">>&"   {
-        //printf("GreatGreatAnd\n");
         return GREATGREATAND;
     }
     

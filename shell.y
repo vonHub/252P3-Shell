@@ -32,6 +32,7 @@ int yylex();
 
 %%
 
+//Comment
 goal:	
 	commands
 	;
