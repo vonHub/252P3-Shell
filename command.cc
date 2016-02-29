@@ -141,7 +141,11 @@ Command::execute()
 	}
 
 	// Print contents of Command data structure
-	print();
+    if (!_error) {
+	    print();
+    } else {
+        printf("Command encountered error, execution cancelled\n");
+    }
 
 	// Add execution here
 	// For every simple command fork a new process
