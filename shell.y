@@ -32,7 +32,6 @@ int yylex();
 
 %%
 
-//Comment
 goal:	
 	commands
 	;
@@ -93,6 +92,7 @@ iomodifier_list:
     |
     ;
 
+// Input, output, and error modifiers
 iomodifier:
 	GREAT WORD {
 		printf("   Yacc: direct output \"%s\"\n", $2);
