@@ -165,7 +165,7 @@ Command::execute()
             // Go on to next simple command
         } else {
             // Error
-            perror("fork");
+            perror("Fork error");
             exit(1);
         }
     }
