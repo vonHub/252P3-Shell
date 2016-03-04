@@ -155,7 +155,7 @@ Command::execute()
     int ret;
 
     for (int i = 0; i < _numOfSimpleCommands; i++) {
-        ret = fork;
+        ret = fork();
         
         if (ret == 0) {
             // Child process
@@ -171,7 +171,7 @@ Command::execute()
     }
 
     if (!_background) {
-        waitpid(ret, null);
+        waitpid(ret, NULL);
     }
 
 	// Clear to prepare for next command
