@@ -160,7 +160,7 @@ Command::execute()
         if (ret == 0) {
             // Child process
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
-        } else if (ret == 0) {
+        } else if (ret > 0) {
             // Parent process
             // Go on to next simple command
         } else {
