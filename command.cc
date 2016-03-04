@@ -152,6 +152,27 @@ Command::execute()
 	// For every simple command fork a new process
 	// Setup i/o redirection
 	// and call exec
+    int ret;
+
+    for (int i = 0; i < _numberOfSimpleCommands; i++) {
+        ret = fork;
+        
+        if (ret == 0) {
+            // Child process
+            execvp(_simpleCommands[i]->_args[0], _simpleCommands[i]->_args);
+        } else if (ret == 0) {
+            // Parent process
+            // Go on to next simple command
+        } else {
+            // Error
+            perror("fork");
+            exit(1);
+        }
+    }
+
+    if (!_background) {
+        waitpid(ret, null);
+    }
 
 	// Clear to prepare for next command
 	clear();
