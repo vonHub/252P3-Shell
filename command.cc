@@ -154,12 +154,12 @@ Command::execute()
 	// and call exec
     int ret;
 
-    for (int i = 0; i < _numberOfSimpleCommands; i++) {
+    for (int i = 0; i < _numOfSimpleCommands; i++) {
         ret = fork;
         
         if (ret == 0) {
             // Child process
-            execvp(_simpleCommands[i]->_args[0], _simpleCommands[i]->_args);
+            execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
         } else if (ret == 0) {
             // Parent process
             // Go on to next simple command
