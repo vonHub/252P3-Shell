@@ -16,7 +16,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <signal.h>
-#include <fcntl.n>
+#include <fcntl.h>
 
 #include "command.h"
 
