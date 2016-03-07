@@ -107,7 +107,7 @@ iomodifier:
         if (Command::_currentCommand._outFile == 0) {
             Command::_currentCommand._outFile = $2;
         } else {
-            // printf("Error: ambiguous output redirection\n");
+            printf("Ambiguous output redirect\n");
             Command::_currentCommand._error = 1;
         }
     }
@@ -116,7 +116,7 @@ iomodifier:
         if (Command::_currentCommand._inFile == 0) {
             Command::_currentCommand._inFile = $2;
         } else {
-            // printf("Error: ambiguous input redirection\n");
+            printf("Ambiguous input redirect\n");
             Command::_currentCommand._error = 1;
         }
     }
@@ -125,7 +125,7 @@ iomodifier:
         if (Command::_currentCommand._errFile == 0) {
             Command::_currentCommand._errFile = $2;
         } else {
-            // printf("Error: ambiguous error redirection\n");
+            printf("Ambiguous error redirect\n");
             Command::_currentCommand._error = 1;
         }
     }
@@ -134,7 +134,7 @@ iomodifier:
         if (Command::_currentCommand._errFile == 0) {
             Command::_currentCommand._errFile = $2;
         } else {
-            // printf("Error: ambiguous error redirection\n");
+            printf("Ambiguous error redirect\n");
             Command::_currentCommand._error = 1;
         }
     }
