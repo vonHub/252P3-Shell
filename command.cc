@@ -165,7 +165,7 @@ Command::execute()
     // Set up initial input
     int fdin;
     if (_inFile) {
-        fdin = open(_inFile, O_READ);
+        fdin = open(_inFile, O_RDONLY);
     } else {
         fdin = dup(defaultin);
     }
