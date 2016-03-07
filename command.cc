@@ -176,7 +176,7 @@ Command::execute()
         int flag = O_WRONLY | O_CREAT;
         if (_errAppend) flag = flag | O_APPEND;
         else flag = flag | O_TRUNC;
-        fderr = open(_errFile, flag, 777);
+        fderr = open(_errFile, flag, 0666);
     } else {
         fderr = dup(defaulterr);
     }
@@ -201,7 +201,7 @@ Command::execute()
                 int flag = O_WRONLY | O_CREAT;
                 if (_outAppend) flag = flag | O_APPEND;
                 else flag = flag | O_TRUNC;
-                fdout = open(_outFile, flag, 777);
+                fdout = open(_outFile, flag, 0666);
             } else {
                 fdout = dup(defaultout);
             }
