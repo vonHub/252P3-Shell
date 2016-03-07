@@ -226,10 +226,10 @@ Command::execute()
     } // End of for loop
 
     // Restore default inputs and outputs
-    dup2(tmpin, 0);
-    dup2(tmpout, 1);
-    close(tmpin);
-    close(tmpout);
+    dup2(defaultin, 0);
+    dup2(defaultout, 1);
+    close(defaultin);
+    close(defaultout);
 
     // Wait until command termination if necessary
     if (!_background) {
