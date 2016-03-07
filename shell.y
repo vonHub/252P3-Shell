@@ -98,7 +98,7 @@ iomodifier:
         if (Command::_currentCommand._outFile == 0) {
 		    Command::_currentCommand._outFile = $2;
         } else {
-            // printf("Error: ambiguous output redirection\n");
+            printf("Ambiguous output redirect\n");
             Command::_currentCommand._error = 1;
         }
 	}
