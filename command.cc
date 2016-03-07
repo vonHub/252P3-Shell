@@ -254,9 +254,7 @@ Command::execute()
 	clear();
 	
 	// Print new prompt
-    if (isatty(0)) {
-	    prompt();
-    }
+	prompt();
 }
 
 // Shell implementation
@@ -264,8 +262,10 @@ Command::execute()
 void
 Command::prompt()
 {
-	printf("myshell>");
-	fflush(stdout);
+    if (isatty(0)) {
+	    printf("myshell>");
+	    fflush(stdout);
+    }
 }
 
 Command Command::_currentCommand;
