@@ -197,7 +197,9 @@ Command::execute()
 
             // Last Simple Command
             if (_outFile) {
-                fdout = open(_outFile, O_WRONLY | O_CREAT, 777);
+                int flag = O_WRONLY | O_CREAT;
+                if (_outAppend) flag = flag | O_APPEND;
+                fdout = open(_outFile, flag, 777);
             } else {
                 fdout = dup(defaultout);
             }
