@@ -180,15 +180,33 @@ Command::execute()
         dup2(fdin, 0);
         close(fdin);
 
-        // Set up output
+        // Determine correct output
         if (i == _numOfSimpleCommands - 1) {
-            // Last Simple Command
 
+            // Last Simple Command
             if (_outFile) {
                 fdout = open(_outFile, O_WRONLY);
+            } else {
+                fdout = dup(tmpout);
             }
 
+        } else {
+
+            // Not last simple command
+            // Pipe the output
+            int fdpipe[2];
+            if (pipe(fdpipe) < 0) {
+                perror("Pipe error:");
+                exit(1);
+            }
+            fdout = fdpipe[1];
+            fdin = fdpipe[0];
+
         }
+
+        // Redirect output
+        dup2(fdout, 1);
+        close(fdout);
 
         ret = fork();
         
@@ -205,7 +223,13 @@ Command::execute()
             perror("Fork error");
             exit(1);
         }
-    }
+    } // End of for loop
+
+    // Restore default inputs and outputs
+    dup2(tmpin, 0);
+    dup2(tmpout, 1);
+    close(tmpin);
+    close(tmpout);
 
     // Wait until command termination if necessary
     if (!_background) {
