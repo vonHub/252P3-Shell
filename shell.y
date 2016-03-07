@@ -46,11 +46,11 @@ command:
 
 simple_command:	
 	command_and_args iomodifier_list background NEWLINE {
-		printf("   Yacc: Execute command\n");
+		// printf("   Yacc: Execute command\n");
 		Command::_currentCommand.execute();
 	}
     | command_and_args PIPE {
-        printf("   Yacc: Pipe\n");
+        // printf("   Yacc: Pipe\n");
     }
 	| NEWLINE 
 	| error NEWLINE { yyerrok; }
@@ -70,7 +70,7 @@ argument_list:
 
 argument:
 	WORD {
-               printf("   Yacc: insert argument \"%s\"\n", $1);
+               // printf("   Yacc: insert argument \"%s\"\n", $1);
 
 	       Command::_currentSimpleCommand->insertArgument( $1 );\
 	}
@@ -78,7 +78,7 @@ argument:
 
 command_word:
 	WORD {
-               printf("   Yacc: insert command \"%s\"\n", $1);
+               // printf("   Yacc: insert command \"%s\"\n", $1);
 	       
 	       Command::_currentSimpleCommand = new SimpleCommand();
 	       Command::_currentSimpleCommand->insertArgument( $1 );
@@ -94,47 +94,47 @@ iomodifier_list:
 // Input, output, and error modifiers
 iomodifier:
 	GREAT WORD {
-		printf("   Yacc: direct output \"%s\"\n", $2);
+        // printf("   Yacc: direct output \"%s\"\n", $2);
         if (Command::_currentCommand._outFile == 0) {
 		    Command::_currentCommand._outFile = $2;
         } else {
-            printf("Error: ambiguous output redirection\n");
+            // printf("Error: ambiguous output redirection\n");
             Command::_currentCommand._error = 1;
         }
 	}
     | GREATGREAT WORD {
-        printf("   Yacc: append output \"%s\"\n", $2);
+        // printf("   Yacc: append output \"%s\"\n", $2);
         if (Command::_currentCommand._outFile == 0) {
             Command::_currentCommand._outFile = $2;
         } else {
-            printf("Error: ambiguous output redirection\n");
+            // printf("Error: ambiguous output redirection\n");
             Command::_currentCommand._error = 1;
         }
     }
     | LESS WORD {
-        printf("   Yacc: direct input \"%s\"\n", $2);
+        // printf("   Yacc: direct input \"%s\"\n", $2);
         if (Command::_currentCommand._inFile == 0) {
             Command::_currentCommand._inFile = $2;
         } else {
-            printf("Error: ambiguous input redirection\n");
+            // printf("Error: ambiguous input redirection\n");
             Command::_currentCommand._error = 1;
         }
     }
     | GREATAND WORD {
-        printf("   Yacc: direct error \"%s\"\n", $2);
+        // printf("   Yacc: direct error \"%s\"\n", $2);
         if (Command::_currentCommand._errFile == 0) {
             Command::_currentCommand._errFile = $2;
         } else {
-            printf("Error: ambiguous error redirection\n");
+            // printf("Error: ambiguous error redirection\n");
             Command::_currentCommand._error = 1;
         }
     }
     | GREATGREATAND WORD {
-        printf("   Yacc: append error \"%s\"\n", $2);
+        // printf("   Yacc: append error \"%s\"\n", $2);
         if (Command::_currentCommand._errFile == 0) {
             Command::_currentCommand._errFile = $2;
         } else {
-            printf("Error: ambiguous error redirection\n");
+            // printf("Error: ambiguous error redirection\n");
             Command::_currentCommand._error = 1;
         }
     }
@@ -142,7 +142,7 @@ iomodifier:
 
 background:
     AMPERSAND {
-        printf("   Yacc: background\n");
+        // printf("   Yacc: background\n");
         Command::_currentCommand._background = 1;
     }
     | /* can be empty */
