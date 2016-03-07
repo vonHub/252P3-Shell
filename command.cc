@@ -244,7 +244,9 @@ Command::execute()
 	clear();
 	
 	// Print new prompt
-	prompt();
+    if (isatty(0)) {
+	    prompt();
+    }
 }
 
 // Shell implementation
