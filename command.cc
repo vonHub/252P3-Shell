@@ -1,3 +1,7 @@
+// Code completed in its current form by
+// Christopher Von Hoene
+// 3/6/16
+// In submission of Part 2 of the shell project
 
 /*
  * CS252: Shell project
@@ -158,6 +162,7 @@ Command::execute()
 	// Setup i/o redirection
 	// and call exec
 
+    // Store normal inputs and outputs
     int defaultin = dup(0);
     int defaultout = dup(1);
     int defaulterr = dup(2);
@@ -173,9 +178,12 @@ Command::execute()
     // Set up error output
     int fderr;
     if (_errFile) {
+        // Compute the correct mode
         int flag = O_WRONLY | O_CREAT;
         if (_errAppend) flag = flag | O_APPEND;
         else flag = flag | O_TRUNC;
+
+        // Open the stream
         fderr = open(_errFile, flag, 0666);
     } else {
         fderr = dup(defaulterr);
@@ -198,9 +206,12 @@ Command::execute()
 
             // Last Simple Command
             if (_outFile) {
+                // Compute the correct mode
                 int flag = O_WRONLY | O_CREAT;
                 if (_outAppend) flag = flag | O_APPEND;
                 else flag = flag | O_TRUNC;
+
+                // Open the output stream
                 fdout = open(_outFile, flag, 0666);
             } else {
                 fdout = dup(defaultout);
@@ -209,7 +220,7 @@ Command::execute()
         } else {
 
             // Not last simple command
-            // Pipe the output
+            // Pipe the output to the next one
             int fdpipe[2];
             if (pipe(fdpipe) < 0) {
                 perror("Pipe error:");
@@ -220,14 +231,16 @@ Command::execute()
 
         }
 
-        // Redirect output
+        // Redirect output to determined file
         dup2(fdout, 1);
         close(fdout);
 
+        // Duplicate this process
         ret = fork();
         
         if (ret == 0) {
             // Child process
+            // Execute command
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
             perror("Execvp error");
             _exit(1);
@@ -235,7 +248,7 @@ Command::execute()
             // Parent process
             // Go on to next simple command
         } else {
-            // Error
+            // Fork returned an error
             perror("Fork error");
             exit(1);
         }
