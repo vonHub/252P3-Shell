@@ -173,7 +173,9 @@ Command::execute()
     // Set up error output
     int fderr;
     if (_errFile) {
-        fderr = open(_errFile, O_WRONLY | O_CREAT, 777);
+        int flag = O_WRONLY | O_CREAT;
+        if (_errAppend) flag = flag | O_APPEND;
+        fderr = open(_errFile, flag, 777);
     } else {
         fderr = dup(defaulterr);
     }
