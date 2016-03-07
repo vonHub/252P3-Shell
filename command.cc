@@ -165,7 +165,7 @@ Command::execute()
     // Set up initial input
     int fdin;
     if (_inFile) {
-        fdin = open(_inFile, O_RDONLY | O_CREAT, 777);
+        fdin = open(_inFile, O_RDONLY);
     } else {
         fdin = dup(defaultin);
     }
@@ -185,7 +185,7 @@ Command::execute()
 
             // Last Simple Command
             if (_outFile) {
-                fdout = open(_outFile, O_WRONLY);
+                fdout = open(_outFile, O_WRONLY | O_CREAT, 777);
             } else {
                 fdout = dup(defaultout);
             }
@@ -228,8 +228,10 @@ Command::execute()
     // Restore default inputs and outputs
     dup2(defaultin, 0);
     dup2(defaultout, 1);
+    dup2(defaulterr, 2);
     close(defaultin);
     close(defaultout);
+    close(defaulterr);
 
     // Wait until command termination if necessary
     if (!_background) {
