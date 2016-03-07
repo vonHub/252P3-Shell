@@ -106,6 +106,7 @@ iomodifier:
         // printf("   Yacc: append output \"%s\"\n", $2);
         if (Command::_currentCommand._outFile == 0) {
             Command::_currentCommand._outFile = $2;
+            Command::_outAppend = 1;
         } else {
             printf("Ambiguous output redirect\n");
             Command::_currentCommand._error = 1;
@@ -133,6 +134,7 @@ iomodifier:
         // printf("   Yacc: append error \"%s\"\n", $2);
         if (Command::_currentCommand._errFile == 0) {
             Command::_currentCommand._errFile = $2;
+            Command::_errAppend = 1;
         } else {
             printf("Ambiguous error redirect\n");
             Command::_currentCommand._error = 1;
