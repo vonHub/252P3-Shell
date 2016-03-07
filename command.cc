@@ -175,6 +175,7 @@ Command::execute()
     if (_errFile) {
         int flag = O_WRONLY | O_CREAT;
         if (_errAppend) flag = flag | O_APPEND;
+        else flag = flag | O_TRUNC;
         fderr = open(_errFile, flag, 777);
     } else {
         fderr = dup(defaulterr);
@@ -199,6 +200,7 @@ Command::execute()
             if (_outFile) {
                 int flag = O_WRONLY | O_CREAT;
                 if (_outAppend) flag = flag | O_APPEND;
+                else flag = flag | O_TRUNC;
                 fdout = open(_outFile, flag, 777);
             } else {
                 fdout = dup(defaultout);
