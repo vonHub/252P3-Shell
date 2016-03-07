@@ -57,6 +57,8 @@ Command::Command()
 	_inFile = 0;
 	_errFile = 0;
 	_background = 0;
+    _outAppend = 0;
+    _errAppend = 0;
     _error = 0;
 }
 
@@ -102,6 +104,8 @@ Command:: clear()
 	_inFile = 0;
 	_errFile = 0;
 	_background = 0;
+    _outAppend = 0;
+    _errAppend = 0;
     _error = 0;
 }
 
@@ -152,14 +156,46 @@ Command::execute()
 	// For every simple command fork a new process
 	// Setup i/o redirection
 	// and call exec
-    int ret;
 
+    int defaultin = dup(0);
+    int defaultout = dup(1);
+    int defaulterr = dup(2);
+    
+    // Set up initial input
+    int fdin;
+    if (_inFile) {
+        fdin = open(_inFile, O_READ);
+    } else {
+        fdin = dup(defaultin);
+    }
+    
+    int ret;
+    int fdout;
+
+    // Loop through list of simple commands
     for (int i = 0; i < _numOfSimpleCommands; i++) {
+
+        // Direct input properly
+        dup2(fdin, 0);
+        close(fdin);
+
+        // Set up output
+        if (i == _numOfSimpleCommands - 1) {
+            // Last Simple Command
+
+            if (_outFile) {
+                fdout = open(_outFile, O_WRONLY);
+            }
+
+        }
+
         ret = fork();
         
         if (ret == 0) {
             // Child process
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
+            perror("Execvp error");
+            _exit(1);
         } else if (ret > 0) {
             // Parent process
             // Go on to next simple command
@@ -170,7 +206,10 @@ Command::execute()
         }
     }
 
+    // Wait until command termination if necessary
     if (!_background) {
+        // Since this is the parent process
+        // ret will contain the pid of the child process
         waitpid(ret, NULL, 0);
     }
 
