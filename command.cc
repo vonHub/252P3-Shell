@@ -187,7 +187,7 @@ Command::execute()
             if (_outFile) {
                 fdout = open(_outFile, O_WRONLY);
             } else {
-                fdout = dup(tmpout);
+                fdout = dup(defaultout);
             }
 
         } else {
