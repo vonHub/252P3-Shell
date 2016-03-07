@@ -169,7 +169,17 @@ Command::execute()
     } else {
         fdin = dup(defaultin);
     }
-    
+   
+    // Set up error output
+    int fderr;
+    if (_errFile) {
+        fderr = open(_errFile, O_WRONLY | O_CREAT, 777);
+    } else {
+        fderr = dup(defaulterr);
+    }
+    dup2(fderr, 2);
+    close(fderr);
+
     int ret;
     int fdout;
 
