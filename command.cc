@@ -138,6 +138,7 @@ Command::print()
 
 extern "C" void interrupt (int sig) {
     // fprintf(stderr, "\nSomeone pressed ctrl-c\n");
+    printf("\n");
     Command::_currentCommand.clear();
     Command::_currentCommand.prompt();
 }
