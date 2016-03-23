@@ -19,6 +19,41 @@
 
 #include "command.h"
 
+int * backgrounds;
+int backgroundsSize = 10;
+
+void addToBackgrounds(int in) {
+    for (int i = 0; i < backgroundsSize; i++) {
+        if (backgrounds[i] == 0) {
+            backgrounds[i] = in;
+            return;
+        }
+    }
+    backgroundsSize *= 2;
+    int * dest = (int *)calloc(backgroundsSize * sizeof(int));
+    memcpy(dest, backgrounds, backgroundsSize / 2);
+    free(backgrounds);
+    backgrounds[backgroundsSize / 2 + 1] = in;
+}
+
+void removeFromBackgrounds(int in) {
+    for (int i = 0; i < backgroundsSize; i++) {
+        if (backgrounds[i] == in) {
+            backgrounds[i] = 0;
+            return;
+        }
+    }
+}
+
+int isBackground(int pid) {
+    for (int i = 0; i < backgroundsSize; i++) {
+        if (backgrounds[i] == pid) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 SimpleCommand::SimpleCommand()
 {
 	// Create available space for 5 arguments
@@ -335,6 +370,8 @@ main()
     if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
         signal(SIGINT, interrupt);
     }
+
+    backgrounds = (int *)calloc(backgroundsSize * sizeof(int));
 
 	Command::_currentCommand.prompt();
 	yyparse();
