@@ -188,13 +188,14 @@ Command::execute()
 
     int ret;
     int fdout;
+    int exit = 0;
 
     // Loop through list of simple commands
     for (int i = 0; i < _numOfSimpleCommands; i++) {
 
         // Check for "exit"
         if (!strcmp(_simpleCommands[i]->_arguments[0], "exit")) {
-            printf("I am supposed to exit\n");
+            exit = 1;
         }
 
         // Direct input properly
@@ -271,6 +272,13 @@ Command::execute()
 
 	// Clear to prepare for next command
 	clear();
+
+    // Exit if necessary
+    if (exit) {
+        printf("Live long and prosper.\n");
+        fflush(stdout);
+        exit(0);
+    }
 	
 	// Print new prompt
 	prompt();
@@ -297,4 +305,3 @@ main()
 	Command::_currentCommand.prompt();
 	yyparse();
 }
-
