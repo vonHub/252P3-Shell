@@ -136,10 +136,6 @@ Command::print()
 	
 }
 
-extern "C" void terminate (int sig) {
-    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
-}
-
 void
 Command::execute()
 {
@@ -300,6 +296,12 @@ Command::prompt()
     }
 }
 
+extern "C" void interrupt (int sig) {
+    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
+    clear();
+    prompt();
+}
+
 Command Command::_currentCommand;
 SimpleCommand * Command::_currentSimpleCommand;
 
@@ -320,7 +322,7 @@ main()
     */
 
     if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
-        signal(SIGINT, terminate);
+        signal(SIGINT, interrupt);
     }
 
 	Command::_currentCommand.prompt();
