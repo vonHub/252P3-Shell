@@ -196,6 +196,7 @@ Command::execute()
         // Check for "exit"
         if (!strcmp(_simpleCommands[i]->_arguments[0], "exit")) {
             quit = 1;
+            break;
         }
 
         // Direct input properly
