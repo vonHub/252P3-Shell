@@ -57,7 +57,15 @@ void myunputc(int c) {
 ">>&"   {
         return GREATGREATAND;
     }
-    
+
+\".+\"  {
+        int length = strlen(yytext);
+        char buf[length - 1];
+        memcpy(buf, yytext, length - 2);
+        buf[length - 1] = '\0';
+        return WORD;
+    }
+
 [^ \t\n][^ \t\n]*  {
 		/* Assume that file names have only alpha chars */
 		yylval.string_val = strdup(yytext);
