@@ -140,10 +140,6 @@ extern "C" void terminate (int sig) {
     fprintf(stderr, "\nSomeone pressed ctrl-c\n");
 }
 
-extern "C" void ignore (int sig) {
-    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
-}
-
 void
 Command::execute()
 {
@@ -311,18 +307,20 @@ int yyparse(void);
 
 main()
 {
+    /*
     struct sigaction sa;
     sa.sa_handler = terminate;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
 
-    if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
-        signal(SIGINT, ignore);
-    }
-
     if (sigaction(SIGINT, &sa, NULL)) {
         perror("Sigaction");
         exit(2);
+    }
+    */
+
+    if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
+        signal(SIGINT, terminate);
     }
 
 	Command::_currentCommand.prompt();
