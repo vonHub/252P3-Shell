@@ -19,6 +19,9 @@
 
 #include "command.h"
 
+int * backgrounds;
+int backgroundsSize = 10;
+
 void addToBackgrounds(int in) {
     for (int i = 0; i < backgroundsSize; i++) {
         if (backgrounds[i] == 0) {
