@@ -299,6 +299,7 @@ Command::execute()
 
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
                 // Change directory and exit
+                printf("Changing directory\n");
                 chdir(_simpleCommands[i]->_arguments[1]);
                 exit(0);
             }
