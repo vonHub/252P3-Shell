@@ -143,7 +143,7 @@ extern "C" void interrupt(int sig) {
     Command::_currentCommand.prompt();
 }
 
-extern "C" void killZombie(int sig) {
+void killZombie(int sig) {
     fprintf("Tried to kill a zombie\n");
 }
 
