@@ -136,11 +136,15 @@ Command::print()
 	
 }
 
-extern "C" void interrupt (int sig) {
+extern "C" void interrupt(int sig) {
     // fprintf(stderr, "\nSomeone pressed ctrl-c\n");
     printf("\n");
     Command::_currentCommand.clear();
     Command::_currentCommand.prompt();
+}
+
+extern "C" void killZombie(int sig) {
+    fprintf("Tried to kill a zombie\n");
 }
 
 void
@@ -275,7 +279,8 @@ Command::execute()
     if (!_background) {
         // Since this is the parent process
         // ret will contain the pid of the child process
-        waitpid(ret, NULL, 0);
+        int status;
+        waitpid(ret, &status, 0);
     }
 
 	// Clear to prepare for next command
@@ -310,17 +315,15 @@ int yyparse(void);
 
 main()
 {
-    /*
     struct sigaction sa;
-    sa.sa_handler = terminate;
+    sa.sa_handler = killZombie;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
+    sa.sa_flags = SA_RESTART;
 
-    if (sigaction(SIGINT, &sa, NULL)) {
+    if (sigaction(SIGCHILD, &sa, NULL)) {
         perror("Sigaction");
         exit(2);
     }
-    */
 
     if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
         signal(SIGINT, interrupt);
