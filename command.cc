@@ -312,6 +312,10 @@ main()
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
 
+    if (signal(SIGINT, SIG_IGN) != SIG_IGN) {
+        signal(SIGINT, ignore);
+    }
+
     if (sigaction(SIGINT, &sa, NULL)) {
         perror("Sigaction");
         exit(2);

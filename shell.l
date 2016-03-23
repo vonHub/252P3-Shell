@@ -64,8 +64,3 @@ void myunputc(int c) {
         //printf("Word\n");
 		return WORD;
 	}
-
-.*  {
-        printf("Caught\n");
-        return WORD;
-    }
