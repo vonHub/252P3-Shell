@@ -146,6 +146,7 @@ extern "C" void interrupt(int sig) {
 extern "C" void killZombie(int sig) {
     // fprintf(stderr, "Tried to kill a zombie\n");
     int pid = waitpid(-1, NULL, WNOHANG);
+    if (pid == -1) return;
     int temp;
     while ((temp = waitpid(-1, NULL, WNOHANG)) > 0) {
         pid = temp;
