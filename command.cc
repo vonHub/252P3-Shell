@@ -142,8 +142,6 @@ extern "C" void terminate (int sig) {
 
 extern "C" void ignore (int sig) {
     fprintf(stderr, "\nSomeone pressed ctrl-c\n");
-    clear();
-    prompt();
 }
 
 void
