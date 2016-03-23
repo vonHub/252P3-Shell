@@ -30,7 +30,7 @@ void addToBackgrounds(int in) {
         }
     }
     backgroundsSize *= 2;
-    int * dest = (int *)calloc(backgroundsSize * sizeof(int));
+    int * dest = (int *)calloc(backgroundsSize, sizeof(int));
     memcpy(dest, backgrounds, backgroundsSize / 2);
     free(backgrounds);
     backgrounds[backgroundsSize / 2 + 1] = in;
@@ -371,7 +371,7 @@ main()
         signal(SIGINT, interrupt);
     }
 
-    backgrounds = (int *)calloc(backgroundsSize * sizeof(int));
+    backgrounds = (int *)calloc(backgroundsSize, sizeof(int));
 
 	Command::_currentCommand.prompt();
 	yyparse();
