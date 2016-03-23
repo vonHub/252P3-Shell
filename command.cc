@@ -320,7 +320,7 @@ main()
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
 
-    if (sigaction(SIGCHILD, &sa, NULL)) {
+    if (sigaction(SIGCHLD, &sa, NULL)) {
         perror("Sigaction");
         exit(2);
     }
