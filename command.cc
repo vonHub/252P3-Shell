@@ -309,12 +309,16 @@ Command::execute()
             // Go on to next simple command
             // Unless...
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
-                // Change directory and exit
+                // Change directory
+                int e;
                 if (_simpleCommands[i]->_numOfArguments > 1) {
-                    int e = chdir(_simpleCommands[i]->_arguments[1]);
+                    e = chdir(_simpleCommands[i]->_arguments[1]);
                 } else {
                     // Change to home directory
-                    chdir(getenv("HOME"));
+                    e = chdir(getenv("HOME"));
+                }
+                if (e != 0) {
+                    fprintf(stderr, "Error: No such file or directory\n");
                 }
             }
 
