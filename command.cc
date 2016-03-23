@@ -188,14 +188,14 @@ Command::execute()
 
     int ret;
     int fdout;
-    int exit = 0;
+    int quit = 0;
 
     // Loop through list of simple commands
     for (int i = 0; i < _numOfSimpleCommands; i++) {
 
         // Check for "exit"
         if (!strcmp(_simpleCommands[i]->_arguments[0], "exit")) {
-            exit = 1;
+            quit = 1;
         }
 
         // Direct input properly
@@ -274,7 +274,7 @@ Command::execute()
 	clear();
 
     // Exit if necessary
-    if (exit) {
+    if (quit) {
         printf("Live long and prosper.\n");
         fflush(stdout);
         exit(0);
