@@ -1,8 +1,3 @@
-// Code completed in its current form by
-// Christopher Von Hoene
-// 3/6/16
-// In submission of Part 2 of the shell project
-
 /*
  * CS252: Shell project
  *
@@ -196,6 +191,11 @@ Command::execute()
 
     // Loop through list of simple commands
     for (int i = 0; i < _numOfSimpleCommands; i++) {
+
+        // Check for "exit"
+        if (!strcmp(_simpleCommands[i]->_arguments[0], "exit")) {
+            printf("I am supposed to exit\n");
+        }
 
         // Direct input properly
         dup2(fdin, 0);
