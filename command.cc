@@ -136,6 +136,12 @@ Command::print()
 	
 }
 
+extern "C" void interrupt (int sig) {
+    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
+    Command::_currentCommand.clear();
+    Command::_currentCommand.prompt();
+}
+
 void
 Command::execute()
 {
@@ -294,12 +300,6 @@ Command::prompt()
 	    printf("myshell>");
 	    fflush(stdout);
     }
-}
-
-extern "C" void interrupt (int sig) {
-    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
-    clear();
-    prompt();
 }
 
 Command Command::_currentCommand;
