@@ -298,11 +298,7 @@ Command::execute()
             // Execute command
 
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
-                // Change directory and exit
-                printf("Changing directory\n");
-                printf("Destination: %s\n", _simpleCommands[i]->_arguments[1]);
-                int e = chdir(_simpleCommands[i]->_arguments[1]);
-                printf("%d\n", e);
+                // Not a real command, exit
                 exit(0);
             }
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
@@ -311,6 +307,12 @@ Command::execute()
         } else if (ret > 0) {
             // Parent process
             // Go on to next simple command
+            // Unless...
+            if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
+                // Change directory and exit
+                int e = chdir(_simpleCommands[i]->_arguments[1]);
+            }
+
         } else {
             // Fork returned an error
             perror("Fork error");
