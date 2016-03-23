@@ -310,7 +310,12 @@ Command::execute()
             // Unless...
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
                 // Change directory and exit
-                int e = chdir(_simpleCommands[i]->_arguments[1]);
+                if (_simpleCommands[i]->_numOfArguments > 1) {
+                    int e = chdir(_simpleCommands[i]->_arguments[1]);
+                } else {
+                    // Change to home directory
+                    chdir(getenv("HOME"));
+                }
             }
 
         } else {
