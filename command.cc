@@ -301,7 +301,8 @@ Command::execute()
                 // Change directory and exit
                 printf("Changing directory\n");
                 printf("Destination: %s\n", _simpleCommands[i]->_arguments[1]);
-                chdir(_simpleCommands[i]->_arguments[1]);
+                int e = chdir(_simpleCommands[i]->_arguments[1]);
+                printf("%d\n", e);
                 exit(0);
             }
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
