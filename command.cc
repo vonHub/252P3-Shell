@@ -136,6 +136,10 @@ Command::print()
 	
 }
 
+extern "C" void terminate (int sig) {
+    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
+}
+
 void
 Command::execute()
 {
@@ -303,6 +307,16 @@ int yyparse(void);
 
 main()
 {
+    struct sigaction sa;
+    sa.sa_handler = terminate;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+
+    if (sigaction(SIGINT, &sa, NULL)) {
+        perror("Sigaction");
+        exit(2);
+    }
+
 	Command::_currentCommand.prompt();
 	yyparse();
 }
