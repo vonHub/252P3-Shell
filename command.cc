@@ -140,6 +140,12 @@ extern "C" void terminate (int sig) {
     fprintf(stderr, "\nSomeone pressed ctrl-c\n");
 }
 
+extern "C" void ignore (int sig) {
+    fprintf(stderr, "\nSomeone pressed ctrl-c\n");
+    clear();
+    prompt();
+}
+
 void
 Command::execute()
 {
