@@ -186,7 +186,10 @@ extern "C" void killZombie(int sig) {
     while ((temp = waitpid(-1, NULL, WNOHANG)) > 0) {
         pid = temp;
     }
-    printf("Process %d exited\n", pid);
+    if (isBackground(pid)) {
+        printf("Process %d exited\n", pid);
+        removeFromBackgrounds(pid);
+    }
 }
 
 void
@@ -323,6 +326,9 @@ Command::execute()
         // ret will contain the pid of the child process
         int status;
         waitpid(ret, &status, 0);
+    } else {
+        // Add to list of background processes
+        addToBackgrounds(ret);
     }
 
 	// Clear to prepare for next command
