@@ -299,7 +299,7 @@ Command::execute()
 
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
                 // Change directory and exit
-                chdir(simpleCommands[i]->_arguments[1]);
+                chdir(_simpleCommands[i]->_arguments[1]);
                 exit(0);
             }
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
