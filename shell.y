@@ -24,6 +24,8 @@
 //#define yylex yylex
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <regex.h>
 #include "command.h"
 void yyerror(const char * s);
 void expandWildcardsIfNecessary(char * arg);
@@ -187,6 +189,14 @@ void expandWildcardsIfNecessary(char * arg) {
     }
     *r = '$'; r++;
     *r = 0;
+
+    regex_t re;
+    if (regcomp(&re, reg, REG_EXTENDED|REG_NOSUB) != 0) {
+        perror("Wildcard error");
+        return;
+    }
+
+    printf("At the end\n");
 }
 
 #if 0
