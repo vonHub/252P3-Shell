@@ -189,7 +189,10 @@ void expandWildcardsIfNecessary(char * arg) {
             printf("%s\n", c);
             c--;
         }
-        if (c != directory) *c == '\0';
+        if (c != directory) {
+            *c == '\0';
+            printf("Made it\n");
+        }
     }
     printf("Directory: %s\n", directory);
 
