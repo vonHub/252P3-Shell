@@ -186,7 +186,7 @@ extern "C" void killZombie(int sig) {
     while ((temp = waitpid(-1, NULL, WNOHANG)) > 0) {
         pid = temp;
     }
-    if (isBackground(pid)) {
+    if (isBackground(pid) && pid != 0) {
         printf("Process %d exited\n", pid);
         removeFromBackgrounds(pid);
     }
