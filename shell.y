@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "command.h"
 void yyerror(const char * s);
-void expandWildCardsIfNecessary(char * arg);
+void expandWildcardsIfNecessary(char * arg);
 int yylex();
 
 %}
