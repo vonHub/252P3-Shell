@@ -204,7 +204,7 @@ Command::execute()
 
 	// Print contents of Command data structure
     if (!_error) {
-	    // print();
+	    print();
     } else {
         printf("Command encountered error, execution cancelled\n");
     }
