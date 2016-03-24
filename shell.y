@@ -222,6 +222,10 @@ void expandWildcardsIfNecessary(char * arg) {
     closedir(dir);
 
     qsort(array, nEntries, sizeof(char *), strcmp);
+
+    for (int i = 0; i < nEntries; i++) {
+        Command::_currentSimpleCommand->insertArgument(array[i]);
+    }
 }
 
 #if 0
