@@ -30,6 +30,7 @@
 #include "command.h"
 void yyerror(const char * s);
 void expandWildcardsIfNecessary(char * arg);
+int cmpr(const void *a, const void *b);
 int yylex();
 
 %}
@@ -221,11 +222,15 @@ void expandWildcardsIfNecessary(char * arg) {
 
     closedir(dir);
 
-    qsort(array, nEntries, sizeof(char *), strcmp);
+    qsort(array, nEntries, sizeof(char *), cmpr);
 
     for (int i = 0; i < nEntries; i++) {
         Command::_currentSimpleCommand->insertArgument(array[i]);
     }
+}
+
+int cmpr(const void *a, const void *b) {
+    return strcmp(*(char **)a, *(char **)b);
 }
 
 #if 0
