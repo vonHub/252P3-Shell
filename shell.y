@@ -161,7 +161,7 @@ yyerror(const char * s)
 	fprintf(stderr,"%s", s);
 }
 
-void expandWildCardsIfNecessary(char * arg) {
+void expandWildcardsIfNecessary(char * arg) {
     printf("Made it\n");
 }
 
