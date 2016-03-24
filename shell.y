@@ -273,8 +273,10 @@ void expandWildcardsIfNecessary(char * arg) {
             char * result = strdup(directory);
             result = strcat(result, "/");
             //result = strcat(result, array[i]);
-            printf("%s\n", array[i]);
-            Command::_currentSimpleCommand->insertArgument(result);
+            char * final = (char *)malloc(sizeof(char) * (strlen(result) + strlen(array[i]) + 1));
+            sprintf(final, "%s%s", result, array[i]);
+            *(final + strlen(result) + strlen(array[i])) = '\0';
+            Command::_currentSimpleCommand->insertArgument(final);
         } else {
             Command::_currentSimpleCommand->insertArgument(array[i]);
         }
