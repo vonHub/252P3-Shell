@@ -72,8 +72,6 @@ argument_list:
 argument:
 	WORD {
                // printf("   Yacc: insert argument \"%s\"\n", $1);
-
-	       Command::_currentSimpleCommand->insertArgument( $1 );\
            expandWildcardsIfNecessary($1);
 	}
 	;
@@ -162,7 +160,10 @@ yyerror(const char * s)
 }
 
 void expandWildcardsIfNecessary(char * arg) {
-    printf("Made it\n");
+    if (strchr(arg, '*') == NULL && strchr(arg, '?') == NULL) {
+        Command::_currentSimpleCommand->insertArgument(arg);
+        return;
+    }
 }
 
 #if 0
