@@ -247,6 +247,7 @@ Command::execute()
     int fdout;
     int quit = 0;
 
+    printf("1\n");
     // Loop through list of simple commands
     for (int i = 0; i < _numOfSimpleCommands; i++) {
 
@@ -296,6 +297,7 @@ Command::execute()
 
         // Duplicate this process
         ret = fork();
+        printf("2\n");
         
         if (ret == 0) {
             // Child process
@@ -305,6 +307,7 @@ Command::execute()
                 // Not a real command, exit
                 exit(0);
             }
+            printf("3\n");
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
             perror("Execvp error");
             _exit(1);
@@ -312,6 +315,7 @@ Command::execute()
             // Parent process
             // Go on to next simple command
             // Unless...
+            printf("4\n");
             if (!strcmp(_simpleCommands[i]->_arguments[0], "cd")) {
                 // Change directory
                 int e;
