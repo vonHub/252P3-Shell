@@ -312,6 +312,8 @@ void expand(char * arg) {
 }
 
 char * expandTildes(char * arg) {
+    if (strchr(arg, '~') == NULL) return arg;
+
     if (strcmp(arg, "~") == 0) {
         printf("1: %s\n", getenv("HOME"));
         return strdup(getenv("HOME"));
@@ -361,7 +363,6 @@ char * expandTildes(char * arg) {
         *b = '\0';
         return buf;
     }
-    return arg;
 }
 
 int cmpr(const void *a, const void *b) {
