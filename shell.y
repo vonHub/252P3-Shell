@@ -223,7 +223,7 @@ void expandWildcardsIfNecessary(char * arg) {
     *r = '$'; r++;
     *r = 0;
 
-    printf("Regular expression: %s\n", reg);
+    // printf("Regular expression: %s\n", reg);
 
     // Convert arg into regular expression
     regex_t re;
