@@ -30,6 +30,7 @@
 #include "command.h"
 void yyerror(const char * s);
 void expand(char * prefix, char * arg);
+char * expandTildes(char * arg);
 int cmpr(const void *a, const void *b);
 int yylex();
 
