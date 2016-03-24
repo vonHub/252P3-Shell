@@ -78,7 +78,7 @@ argument_list:
 argument:
 	WORD {
                // printf("   Yacc: insert argument \"%s\"\n", $1);
-           expand($1);
+           expand(NULL, $1);
 	}
 	;
 
@@ -165,7 +165,7 @@ yyerror(const char * s)
 	fprintf(stderr,"%s", s);
 }
 
-void expand(char * arg) {
+void expand(char * prefix, char * arg) {
 
     // Expand tildes
     arg = expandTildes(arg);
@@ -204,11 +204,6 @@ void expand(char * arg) {
         }
         start = arg + (c - directory) + 1;
     }
-    //printf("Directory: %s\n", directory);
-    // 'Directory' will now hold a psuedo-regex.
-    // We need to turn it into a real regex and
-    // check every directory matching it.
-
 
     if (*start == '.') {
         hidden = 0;
@@ -238,18 +233,6 @@ void expand(char * arg) {
     }
     *r = '$'; r++;
     *r = 0;
-
-    // Now repeat for the directory name
-    char * dirreg = (char *)malloc(2 * strlen(directory) + 10);
-    a = directory;
-    char * d = dirreg;
-    *d = '^'; d++;
-    while (*a) {
-
-        a++;
-    }
-    *d = '$'; d++;
-    *d = 0;
 
     // printf("Regular expression: %s\n", reg);
 
@@ -315,56 +298,56 @@ char * expandTildes(char * arg) {
     if (strchr(arg, '~') == NULL) return arg;
 
     if (strcmp(arg, "~") == 0) {
-        printf("1: %s\n", getenv("HOME"));
+
+        // Simple tilde replacement
         return strdup(getenv("HOME"));
+
     } else if (*arg == '~' && *(arg + 1) == '/') {
-        // Replace tilde with home directory
+
+        // Replace tilde with own home directory
         char * home = getenv("HOME");
         char * buf = (char *)malloc(strlen(home) + strlen(arg));
         char * a = arg;
         char * b = buf;
         char * h = home;
-        while (*a != '~') {
-            *b++ = *a++;
-        }
+
+        // Copy up to the tilde
+        while (*a != '~') { *b++ = *a++; }
         a++;
-        while (*h != '\0') {
-            *b++ = *h++;
-        }
-        while (*a != '\0') {
-            *b++ = *a++;
-        }
+
+        // Copy the home directory
+        while (*h != '\0') { *b++ = *h++; }
+
+        // Copy the rest of the argument
+        while (*a != '\0') { *b++ = *a++; }
+
         *b = '\0';
         return buf;
+
     } else {
-        // Get tilde and name of other user
-        // Then replace tilde with his home directory
+
+        // Get address of general home directory
         char * home = getenv("HOME");
         char * buf = (char *)malloc(strlen(home) + strlen(arg));
         char * h = home + strlen(home);
-        while (*h != '/') {
-            h--;
-        }
+        while (*h != '/') { h--; }
         h++;
         *h = '\0';
+
+        // Then replace the tilde with it
         char * a = arg;
         char * b = buf;
         h = home;
-        while (*a != '~') {
-            *b++ = *a++;
-        }
+        while (*a != '~') { *b++ = *a++; }
         a++;
-        while (*h != '\0') {
-            *b++ = *h++;
-        }
-        while (*a != '\0') {
-            *b++ = *a++;
-        }
+        while (*h != '\0') { *b++ = *h++; }
+        while (*a != '\0') { *b++ = *a++; }
         *b = '\0';
         return buf;
     }
 }
 
+// Generic string sorting function for qsort
 int cmpr(const void *a, const void *b) {
     return strcmp(*(char **)a, *(char **)b);
 }
