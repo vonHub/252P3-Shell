@@ -181,9 +181,11 @@ void expandWildcardsIfNecessary(char * arg) {
     // Then chop off the directory bit from the regex
     char * directory;
     char * start;
+    int prepend = 1;
     if (strchr(arg, '/') == NULL) {
         directory = strdup(".");
         start = arg;
+        prepend = false;    // Don't return preceded by dir name
     } else {
         directory = strdup(arg);
         char * c = directory + strlen(arg);
@@ -244,7 +246,7 @@ void expandWildcardsIfNecessary(char * arg) {
 
     // Check for matches in directory names
     while ( (ent = readdir(dir)) != NULL) {
-        printf("Entry: %s\n", ent->d_name);
+        // printf("Entry: %s\n", ent->d_name);
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
 
             // Ignore hidden files
@@ -267,7 +269,14 @@ void expandWildcardsIfNecessary(char * arg) {
 
     // Add matches to arguments list
     for (int i = 0; i < nEntries; i++) {
-        Command::_currentSimpleCommand->insertArgument(array[i]);
+        if (prepend) {
+            char * result = strdup(directory);
+            result = strcat(result, "/");
+            result = strcat(result, array[i]);
+            Command::_currentSimpleCommand->insertArgument(result);
+        } else {
+            Command::_currentSimpleCommand->insertArgument(array[i]);
+        }
     }
 }
 
