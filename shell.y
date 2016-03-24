@@ -211,7 +211,7 @@ void expandWildcardsIfNecessary(char * arg) {
     }
 
     closedir(dir);
-        }
+
     }
 }
 
