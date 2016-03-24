@@ -308,6 +308,8 @@ Command::execute()
                 exit(0);
             }
             printf("3\n");
+            printf("Command: %s\n", _simpleCommands[i]->_arguments[0]);
+            printf("Arg: %s\n", _simpleCommands[i]->_arguments[1]);
             execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
             perror("Execvp error");
             _exit(1);
