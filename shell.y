@@ -183,7 +183,7 @@ void expandWildcardsIfNecessary(char * arg) {
     char * start;
 
     int prepend = 1;
-    int ignore = 1;
+    int hidden = 1;
 
     if (strchr(arg, '/') == NULL) {
         directory = strdup(".");
@@ -202,7 +202,7 @@ void expandWildcardsIfNecessary(char * arg) {
     }
     // printf("Directory: %s\n", directory);
     if (*start == '.') {
-        ignore = 0;
+        hidden = 0;
         start++;
     }
 
@@ -257,7 +257,8 @@ void expandWildcardsIfNecessary(char * arg) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
 
             // Ignore hidden files
-            if (*(ent->d_name) == '.' && ignore) continue;
+            if (*(ent->d_name) == '.' && hidden) continue;
+            if (*(ent->d_name) != '.' && !hidden) continue;
 
             if (nEntries == maxEntries) {
                 maxEntries *= 2;
