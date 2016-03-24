@@ -26,6 +26,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <regex.h>
+#include <dirent.h>
 #include "command.h"
 void yyerror(const char * s);
 void expandWildcardsIfNecessary(char * arg);
@@ -196,7 +197,22 @@ void expandWildcardsIfNecessary(char * arg) {
         return;
     }
 
-    printf("At the end\n");
+    DIR * dir = opendir(".");
+    if (dir == NULL) {
+        perror("opendir error");
+        return;
+    }
+
+    struct dirent * ent;
+    while ( (ent = readdir(dir)) != NULL) {
+        if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
+            Command::_currentSimpleCommand->insertArgument(strdup(ent->d_name));
+        }
+    }
+
+    closedir(dir);
+        }
+    }
 }
 
 #if 0
