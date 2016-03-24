@@ -29,7 +29,7 @@
 #include <dirent.h>
 #include "command.h"
 void yyerror(const char * s);
-void expandWildcardsIfNecessary(char * arg);
+void expand(char * arg);
 int cmpr(const void *a, const void *b);
 int yylex();
 
@@ -77,7 +77,7 @@ argument_list:
 argument:
 	WORD {
                // printf("   Yacc: insert argument \"%s\"\n", $1);
-           expandWildcardsIfNecessary($1);
+           expand($1);
 	}
 	;
 
@@ -164,7 +164,7 @@ yyerror(const char * s)
 	fprintf(stderr,"%s", s);
 }
 
-void expandWildcardsIfNecessary(char * arg) {
+void expand(char * arg) {
 
     // Check if wildcards exist
     if (strchr(arg, '*') == NULL && strchr(arg, '?') == NULL) {
@@ -200,7 +200,12 @@ void expandWildcardsIfNecessary(char * arg) {
         }
         start = arg + (c - directory) + 1;
     }
-    printf("Directory: %s\n", directory);
+    //printf("Directory: %s\n", directory);
+    // 'Directory' will now hold a psuedo-regex.
+    // We need to turn it into a real regex and
+    // check every directory matching it.
+
+
     if (*start == '.') {
         hidden = 0;
         start++;
@@ -230,6 +235,18 @@ void expandWildcardsIfNecessary(char * arg) {
     *r = '$'; r++;
     *r = 0;
 
+    // Now repeat for the directory name
+    char * dirreg = (char *)malloc(2 * strlen(directory) + 10);
+    a = directory;
+    char * d = dirreg;
+    *d = '^'; d++;
+    while (*a) {
+
+        a++;
+    }
+    *d = '$'; d++;
+    *d = 0;
+
     // printf("Regular expression: %s\n", reg);
 
     // Convert arg into regular expression
@@ -245,13 +262,13 @@ void expandWildcardsIfNecessary(char * arg) {
         return;
     }
 
-    // Create an array to put directory names into
+    // Create an array to put matches into
     struct dirent * ent;
     int maxEntries = 20;
     int nEntries = 0;
     char ** array = (char **)malloc(maxEntries * sizeof(char*));
 
-    // Check for matches in directory names
+    // Check for matches in directory files
     while ( (ent = readdir(dir)) != NULL) {
         // printf("Entry: %s\n", ent->d_name);
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
