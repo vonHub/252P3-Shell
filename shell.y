@@ -181,7 +181,10 @@ void expandWildcardsIfNecessary(char * arg) {
     // Then chop off the directory bit from the regex
     char * directory;
     char * start;
+
     int prepend = 1;
+    int ignore = 1;
+
     if (strchr(arg, '/') == NULL) {
         directory = strdup(".");
         start = arg;
@@ -198,6 +201,10 @@ void expandWildcardsIfNecessary(char * arg) {
         start = arg + (c - directory) + 1;
     }
     // printf("Directory: %s\n", directory);
+    if (*start = ".") {
+        ignore = 0;
+        start++;
+    }
 
     // Replace wildcards with regex counterparts
     char * reg = (char *)malloc(2 * strlen(start) + 10);
@@ -250,7 +257,7 @@ void expandWildcardsIfNecessary(char * arg) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
 
             // Ignore hidden files
-            if (*(ent->d_name) == '.') continue;
+            if (*(ent->d_name) == '.' && ignore) continue;
 
             if (nEntries == maxEntries) {
                 maxEntries *= 2;
@@ -272,7 +279,6 @@ void expandWildcardsIfNecessary(char * arg) {
         if (prepend) {
             char * result = strdup(directory);
             result = strcat(result, "/");
-            //result = strcat(result, array[i]);
             char * final = (char *)malloc(sizeof(char) * (strlen(result) + strlen(array[i]) + 1));
             sprintf(final, "%s%s", result, array[i]);
             *(final + strlen(result) + strlen(array[i])) = '\0';
