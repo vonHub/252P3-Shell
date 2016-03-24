@@ -271,13 +271,10 @@ void expandWildcardsIfNecessary(char * arg) {
     for (int i = 0; i < nEntries; i++) {
         if (prepend) {
             char * result = strdup(directory);
-            printf("Here it comes...\n");
             result = strcat(result, "/");
-            printf("Almost there...\n");
             result = strcat(result, array[i]);
-            printf("Ready?\n");
+            printf("%s\n", result);
             Command::_currentSimpleCommand->insertArgument(result);
-            printf("Surprising.\n");
         } else {
             Command::_currentSimpleCommand->insertArgument(array[i]);
         }
