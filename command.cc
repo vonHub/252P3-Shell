@@ -195,7 +195,6 @@ extern "C" void killZombie(int sig) {
 void
 Command::execute()
 {
-    printf("Got to execution\n");
 	// Don't do anything if there are no simple commands
 	if ( _numOfSimpleCommands == 0 ) {
 		prompt();
