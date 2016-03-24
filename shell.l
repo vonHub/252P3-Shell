@@ -64,6 +64,7 @@ void myunputc(int c) {
         memcpy(buf, yytext + 1, length - 2);
         buf[length - 1] = '\0';
         printf("Copied from quotes: %s\n", buf);
+        yylval.string_val = strdup(buf);
         return WORD;
     }
 
