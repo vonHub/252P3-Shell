@@ -180,8 +180,10 @@ void expandWildcardsIfNecessary(char * arg) {
     //     to last slash
     // Then chop off the directory bit from the regex
     char * directory;
+    char * start;
     if (strchr(arg, '/') == NULL) {
         directory = strdup(".");
+        start = arg;
     } else {
         directory = strdup(arg);
         char * c = directory + strlen(arg);
@@ -191,12 +193,13 @@ void expandWildcardsIfNecessary(char * arg) {
         if (c != directory) {
             *c = '\0';
         }
+        start = arg + (c - directory) + 1;
     }
     // printf("Directory: %s\n", directory);
 
     // Replace wildcards with regex counterparts
-    char * reg = (char *)malloc(2 * strlen(arg) + 10);
-    char * a = arg;
+    char * reg = (char *)malloc(2 * strlen(start) + 10);
+    char * a = start;
     char * r = reg;
     *r = '^'; r++;
     while (*a) {
