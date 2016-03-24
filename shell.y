@@ -73,7 +73,7 @@ argument:
                // printf("   Yacc: insert argument \"%s\"\n", $1);
 
 	       Command::_currentSimpleCommand->insertArgument( $1 );\
-           Command::expandWildcardsIfNecessary($1);
+           expandWildcardsIfNecessary($1);
 	}
 	;
 
@@ -158,6 +158,10 @@ void
 yyerror(const char * s)
 {
 	fprintf(stderr,"%s", s);
+}
+
+void expandWildCardsIfNecessary(char * arg) {
+    printf("Made it\n");
 }
 
 #if 0
