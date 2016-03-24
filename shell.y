@@ -30,6 +30,7 @@
 #include "command.h"
 void yyerror(const char * s);
 void expand(char * arg);
+char * expandTildes(char * arg);
 int cmpr(const void *a, const void *b);
 int yylex();
 
@@ -165,6 +166,9 @@ yyerror(const char * s)
 }
 
 void expand(char * arg) {
+
+    // Expand tildes
+    arg = expandTildes(arg);
 
     // Check if wildcards exist
     if (strchr(arg, '*') == NULL && strchr(arg, '?') == NULL) {
@@ -305,6 +309,37 @@ void expand(char * arg) {
             Command::_currentSimpleCommand->insertArgument(array[i]);
         }
     }
+}
+
+char * expandTildes(char * arg) {
+    if (strcmp(arg, "~") == 0) {
+        return getenv("HOME");
+    } else if (*arg == '~' && *(arg + 1) == '/') {
+        // Replace tilde with home directory
+        char * home = getenv("HOME");
+        char buf[strlen(home) + strlen(arg)];
+        char * a = arg;
+        char * b = buf;
+        char * h = home;
+        while (*a != '~') {
+            *b++ = *a++;
+        }
+        a++;
+        while (*h != '\0') {
+            *b++ = *h++;
+        }
+        while (*a != '\0') {
+            *b++ = *a++;
+        }
+        *b = '\0';
+        printf("Result: %s\n", buf);
+        return buf;
+    } else {
+        // Get tilde and name of other user
+        // Then replace tilde with his home directory
+
+    }
+    return arg;
 }
 
 int cmpr(const void *a, const void *b) {
