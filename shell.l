@@ -58,7 +58,8 @@ void myunputc(int c) {
         return GREATGREATAND;
     }
 
-\".+\"  {
+\"([^\"\\]|\\\")*(?<!\\)\"  {
+        // Old: \".+\"
         int length = strlen(yytext);
         char buf[length - 1];
         memcpy(buf, yytext + 1, length - 2);
