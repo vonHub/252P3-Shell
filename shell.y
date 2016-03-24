@@ -192,7 +192,7 @@ void expandWildcardsIfNecessary(char * arg) {
             *c = '\0';
         }
     }
-    printf("Directory: %s\n", directory);
+    // printf("Directory: %s\n", directory);
 
     // Replace wildcards with regex counterparts
     char * reg = (char *)malloc(2 * strlen(arg) + 10);
@@ -239,6 +239,7 @@ void expandWildcardsIfNecessary(char * arg) {
 
     // Check for matches in directory names
     while ( (ent = readdir(dir)) != NULL) {
+        printf("%s\n", ent->d_name);
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
 
             // Ignore hidden files
