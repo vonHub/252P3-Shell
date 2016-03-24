@@ -345,8 +345,8 @@ char * expandTildes(char * arg) {
         }
         h++;
         *h = '\0';
-        a = arg;
-        b = buf;
+        char * a = arg;
+        char * b = buf;
         h = home;
         while (*a != '~') {
             *b++ = *a++;
