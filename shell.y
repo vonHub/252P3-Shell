@@ -313,6 +313,7 @@ void expand(char * arg) {
 
 char * expandTildes(char * arg) {
     if (strcmp(arg, "~") == 0) {
+        printf("1: %s\n", getenv("HOME"));
         return getenv("HOME");
     } else if (*arg == '~' && *(arg + 1) == '/') {
         // Replace tilde with home directory
