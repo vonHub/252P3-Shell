@@ -185,7 +185,10 @@ void expandWildcardsIfNecessary(char * arg) {
     } else {
         directory = strdup(arg);
         char * c = directory + strlen(arg);
-        while (*c != '/') c--;
+        while (*c != '/') {
+            printf("%s\n", c);
+            c--;
+        }
         if (c != directory) c == '\0';
     }
     printf("Directory: %s\n", directory);
