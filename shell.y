@@ -211,8 +211,7 @@ void expandWildcardsIfNecessary(char * arg) {
 
     while ( (ent = readdir(dir)) != NULL) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
-            if (strcmp(ent->d_name, ".") == 0) continue;
-            if (strcmp(ent->d_name, "..") == 0) continue;
+            if (*(ent->d_name) == '.') continue;
             if (nEntries == maxEntries) {
                 maxEntries *= 2;
                 array = (char **)realloc(array, maxEntries * sizeof(char *));
