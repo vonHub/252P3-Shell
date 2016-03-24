@@ -271,9 +271,9 @@ void expandWildcardsIfNecessary(char * arg) {
     for (int i = 0; i < nEntries; i++) {
         if (prepend) {
             char * result = strdup(directory);
-            result = strcat(result, "/");
-            result = strcat(result, array[i]);
-            printf("%s\n", result);
+            //result = strcat(result, "/");
+            //result = strcat(result, array[i]);
+            //printf("%s\n", result);
             Command::_currentSimpleCommand->insertArgument(result);
         } else {
             Command::_currentSimpleCommand->insertArgument(array[i]);
