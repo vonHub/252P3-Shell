@@ -192,7 +192,7 @@ extern "C" void killZombie(int sig) {
     }
 }
 
-void expandWildCardsIfNecessary(char * arg) {
+void Command::expandWildCardsIfNecessary(char * arg) {
     printf("This method was called\n");
 }
 
