@@ -29,8 +29,7 @@
 #include <dirent.h>
 #include "command.h"
 void yyerror(const char * s);
-void expand(char * arg);
-char * expand(char * prefix, char * arg);
+void expand(char * prefix, char * arg);
 int cmpr(const void *a, const void *b);
 int yylex();
 
