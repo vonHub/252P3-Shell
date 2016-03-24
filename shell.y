@@ -218,6 +218,8 @@ void expandWildcardsIfNecessary(char * arg) {
     *r = '$'; r++;
     *r = 0;
 
+    printf("Regular expression: %s\n", reg);
+
     // Convert arg into regular expression
     regex_t re;
     if (regcomp(&re, reg, REG_EXTENDED|REG_NOSUB) != 0) {
