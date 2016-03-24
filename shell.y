@@ -200,7 +200,7 @@ void expandWildcardsIfNecessary(char * arg) {
         }
         start = arg + (c - directory) + 1;
     }
-    // printf("Directory: %s\n", directory);
+    printf("Directory: %s\n", directory);
     if (*start == '.') {
         hidden = 0;
         start++;
