@@ -73,7 +73,7 @@ argument:
                // printf("   Yacc: insert argument \"%s\"\n", $1);
 
 	       Command::_currentSimpleCommand->insertArgument( $1 );\
-           expandWildcardsIfNecessary();
+           expandWildcardsIfNecessary($1);
 	}
 	;
 
