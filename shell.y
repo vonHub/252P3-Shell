@@ -188,6 +188,7 @@ void expandWildcardsIfNecessary(char * arg) {
         while (*c != '/') c--;
         if (c != directory) c == '\0';
     }
+    printf("Directory: %s\n", directory);
 
     // Replace wildcards with regex counterparts
     char * reg = (char *)malloc(2 * strlen(arg) + 10);
