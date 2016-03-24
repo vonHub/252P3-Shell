@@ -165,10 +165,28 @@ yyerror(const char * s)
 }
 
 void expandWildcardsIfNecessary(char * arg) {
+
+    // Check if wildcards exist
     if (strchr(arg, '*') == NULL && strchr(arg, '?') == NULL) {
+        // If not, no need for anything fancy
         Command::_currentSimpleCommand->insertArgument(arg);
         return;
     }
+
+    // Open correct directory
+    // No slashes means current directory
+    // Preceding slash means absolute path
+    // Slashes but not beginning means use part up
+    //     to last slash
+    // Then chop off the directory bit from the regex
+    char * directory;
+    if (strchr(arg, '/') == NULL) {
+        directory = strdup(".");
+    } else if (*arg = '/') {
+        
+    }
+
+    // Replace wildcards with regex counterparts
     char * reg = (char *)malloc(2 * strlen(arg) + 10);
     char * a = arg;
     char * r = reg;
@@ -192,6 +210,7 @@ void expandWildcardsIfNecessary(char * arg) {
     *r = '$'; r++;
     *r = 0;
 
+    // Convert arg into regular expression
     regex_t re;
     if (regcomp(&re, reg, REG_EXTENDED|REG_NOSUB) != 0) {
         perror("Wildcard error");
@@ -204,18 +223,24 @@ void expandWildcardsIfNecessary(char * arg) {
         return;
     }
 
+    // Create an array to put directory names into
     struct dirent * ent;
     int maxEntries = 20;
     int nEntries = 0;
     char ** array = (char **)malloc(maxEntries * sizeof(char*));
 
+    // Check for matches in directory names
     while ( (ent = readdir(dir)) != NULL) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
+
+            // Ignore hidden files
             if (*(ent->d_name) == '.') continue;
+
             if (nEntries == maxEntries) {
                 maxEntries *= 2;
                 array = (char **)realloc(array, maxEntries * sizeof(char *));
             }
+
             array[nEntries] = strdup(ent->d_name);
             nEntries++;
         }
@@ -223,8 +248,10 @@ void expandWildcardsIfNecessary(char * arg) {
 
     closedir(dir);
 
+    // Sort alphanumerically
     qsort(array, nEntries, sizeof(char *), cmpr);
 
+    // Add matches to arguments list
     for (int i = 0; i < nEntries; i++) {
         Command::_currentSimpleCommand->insertArgument(array[i]);
     }
