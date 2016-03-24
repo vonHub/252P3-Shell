@@ -212,8 +212,7 @@ void expandWildcardsIfNecessary(char * arg) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
             if (nEntries == maxEntries) {
                 maxEntries *= 2;
-                array = realloc(array, maxEntries * sizeof(char *));
-                assert(array != NULL);
+                array = (char **)realloc(array, maxEntries * sizeof(char *));
             }
             array[nEntries] = strdup(ent->d_name);
             nEntries++;
