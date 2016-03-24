@@ -317,7 +317,7 @@ char * expandTildes(char * arg) {
     } else if (*arg == '~' && *(arg + 1) == '/') {
         // Replace tilde with home directory
         char * home = getenv("HOME");
-        char buf[strlen(home) + strlen(arg)];
+        char * buf = (char *)malloc(strlen(home) + strlen(arg));
         char * a = arg;
         char * b = buf;
         char * h = home;
