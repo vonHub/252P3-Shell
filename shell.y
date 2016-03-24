@@ -337,7 +337,29 @@ char * expandTildes(char * arg) {
     } else {
         // Get tilde and name of other user
         // Then replace tilde with his home directory
-
+        char * home = getenv("HOME");
+        char * buf = (char *)malloc(strlen(home) + strlen(arg));
+        char * h = home + strlen(home);
+        while (*h != '/') {
+            h--;
+        }
+        h++;
+        *h = '\0';
+        a = arg;
+        b = buf;
+        h = home;
+        while (*a != '~') {
+            *b++ = *a++;
+        }
+        a++;
+        while (*h != '\0') {
+            *b++ = *h++;
+        }
+        while (*a != '\0') {
+            *b++ = *a++;
+        }
+        *b = '\0';
+        return buf;
     }
     return arg;
 }
