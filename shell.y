@@ -182,8 +182,11 @@ void expandWildcardsIfNecessary(char * arg) {
     char * directory;
     if (strchr(arg, '/') == NULL) {
         directory = strdup(".");
-    } else if (*arg = '/') {
-        
+    } else {
+        directory = strdup(arg);
+        char * c = directory + strlen(arg);
+        while (*c != '/') c--;
+        if (c != directory) c == '\0';
     }
 
     // Replace wildcards with regex counterparts
@@ -217,7 +220,7 @@ void expandWildcardsIfNecessary(char * arg) {
         return;
     }
 
-    DIR * dir = opendir(".");
+    DIR * dir = opendir(directory);
     if (dir == NULL) {
         perror("opendir error");
         return;
