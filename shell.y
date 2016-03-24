@@ -204,13 +204,25 @@ void expandWildcardsIfNecessary(char * arg) {
     }
 
     struct dirent * ent;
+    int maxEntries = 20;
+    int nEntries = 0;
+    char ** array = (char **)malloc(maxEntries * sizeof(char*));
+
     while ( (ent = readdir(dir)) != NULL) {
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
-            Command::_currentSimpleCommand->insertArgument(strdup(ent->d_name));
+            if (nEntries == maxEntries) {
+                maxEntries *= 2;
+                array = realloc(array, maxEntries * sizeof(char *));
+                assert(array != NULL);
+            }
+            array[nEntries] = strdup(ent->d_name);
+            nEntries++;
         }
     }
 
     closedir(dir);
+
+    qsort(array, nEntries, sizeof(char *), strcmp);
 }
 
 #if 0
