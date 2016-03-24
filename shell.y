@@ -239,7 +239,7 @@ void expandWildcardsIfNecessary(char * arg) {
 
     // Check for matches in directory names
     while ( (ent = readdir(dir)) != NULL) {
-        printf("%s\n", ent->d_name);
+        printf("Entry: %s\n", ent->d_name);
         if (regexec(&re, ent->d_name, (size_t)0, NULL, 0) == 0) {
 
             // Ignore hidden files
